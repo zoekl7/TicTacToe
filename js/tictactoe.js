@@ -117,6 +117,17 @@ function audio(audioURL) {
     audio.play();
 }
 
+//This utilizes html canvas to draw lines
+function drawWinLine(coordX1, coordY1, coordX2, coordY2) {
+    const canvas = document.getElementById('win-lines');
+    const c = canvas.getContext('2d');
+    let x1 = coordX1,
+        y1 = coordY1,
+        x2 = coordX2,
+        y2 = coordY2,
+        x = x1,
+        y = y1;
+}
 //This function interacts with the canvas.
 function animateLineDrawing() {
     //This creates the loop for when the ends
