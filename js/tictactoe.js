@@ -70,7 +70,7 @@ function placeXOrO(squareNumber) {
 //This function parses the selected Squares array to search for win conditions. drawWinLine function is called to draw line if condition is met.
 function checkWinConditions() {
     //X/O 0-8 condition.
-    if     (arrayIncludes('0X', '1X', '2X')) { drawWinLine(50, 100, 558, 100); }
+    if (arrayIncludes('0X', '1X', '2X')) { drawWinLine(50, 100, 558, 100); }
     else if (arrayIncludes('3X', '4X', '5X')) { drawWinLin(50, 304, 558, 304); }
     else if (arrayIncludes('6X', '7X', '8X')) { drawWinLin(50, 508, 558, 508); }
     else if (arrayIncludes('OX', '3X', '6X')) { drawWinLin(100, 50, 100, 558); }
@@ -87,11 +87,11 @@ function checkWinConditions() {
     else if (arrayIncludes('60', '4O', '2O')) { drawWinLin(100, 508, 510, 90); }
     else if (arrayIncludes('0O', '4O', '8O')) { drawWinLin(100, 100, 520, 520); }
     //This condition checks for a tie. If none of the above conditions register and 9 squares are selected, the code executes.
-    else if (selectedSquares.length >= 9)
+    else if (selectedSquares.length >= 9) {
     //This plays the tie sound.
     audio('./media/tie.mp3');
     //This function sets a .3 second timer before resetGame is called.
-    setTimeout(function () { resetGame(); }, 1000);
+    setTimeout(function () { resetGame(); }, 500);
 }
 
 //This function checks if an array inclused 3 strings. It is used to check win condition.
@@ -102,13 +102,15 @@ function arrayIncludes(squareA, squareB, squareC) {
     const c = selectedSquares.includes(squareC);
     // if the 3 variables we pass are all included in our array true is returned and our else if condition executes the drawWinLine function.
     if (a === true && b === true && c === true) { return true; }
-    
+    }
 }
 
-//This function makes our body element temporarily unclickable for 1 second.
-function disableClick() {
-    body.style.pointerEvents = 'none';
-    setTimeout(function() {body.style.pointerEvents = 'auto';}, 1000);
+function resetGame() {
+    for (let i = 0; i < 9; i++) {
+        let square = document.getElementById(String(i));
+        square.style.backgroundImage = '';
+    }
+    selectedSquares = [];
 }
 
 //This function takes a string parameter of the path set earlier for placement sound.
@@ -127,7 +129,7 @@ function drawWinLine(coordX1, coordY1, coordX2, coordY2) {
         y2 = coordY2,
         x = x1,
         y = y1;
-}
+
 //This function interacts with the canvas.
 function animateLineDrawing() {
     //This creates the loop for when the ends
@@ -174,12 +176,7 @@ animateLineDrawing();
 //This waits 1 second, then clears canvas, resets game, and allows clicking again.
 setTimeout(function () { clear(); resetGame(); }, 1000);
 
-//This resets the game in a tie or a win.
-function resetGame() {
-    for (let i = 0; i < 9; i++) {
-        let square = document.getElementById(String(i));
-        square.style.backgroundImage = '';
+    function disableClick() {
+        body.style.pointerEvents = 'none';
+        setTimeout(function () { body.style.pointerEvents = 'auto'; }, 1000);
     }
-    //Resets array so it is empty and we can start over.
-    selectedSquares = [];
-}
